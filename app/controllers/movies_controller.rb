@@ -11,8 +11,8 @@ class MoviesController < ApplicationController
   end
 
   def index
-    #@movies = Movie.all
-	@movies = Movie.order(title);
+    @movies = Movie.all
+	#@movies = Movie.all.order(:title);
   end
 
   def new
