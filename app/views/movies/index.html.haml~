@@ -1,15 +1,5 @@
 -#  This file is app/views/movies/index.html.haml
-%h1 All Movies
-
-%table#movies
-  %thead
-    %tr
-      %th= link_to 'Movie Title', movies_path
-      %th Movies
-      %th Rating
-      %th Release Date
-      %th More Info
-  %tbody
+%= render 'form'
     - @movies.each do |movie|
       %tr
         %td= movie.title 
