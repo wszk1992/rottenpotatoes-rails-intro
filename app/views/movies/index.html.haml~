@@ -5,7 +5,7 @@
   %thead
     %tr
 	//modify here
-      %th movies
+      %th = link_to 'Movie Title', movie_path
       %th Rating
       %th Release Date
       %th More Info
