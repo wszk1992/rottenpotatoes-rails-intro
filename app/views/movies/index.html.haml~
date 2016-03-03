@@ -4,7 +4,8 @@
 %table#movies
   %thead
     %tr
-      %th Movie Title
+-# %th= link_to "Movie Title", movie_path(movie)
+      %th movie_titles
       %th Rating
       %th Release Date
       %th More Info
