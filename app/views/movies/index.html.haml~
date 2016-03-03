@@ -4,13 +4,12 @@
 %table#movies
   %thead
     %tr
-	//modify here
-      %th = link_to 'Movie Title', movie_path
+      %th movies
       %th Rating
       %th Release Date
       %th More Info
   %tbody
-    - @movies.each do |movie|
+      @movies.each do |movie|
       %tr
         %td= movie.title 
         %td= movie.rating
