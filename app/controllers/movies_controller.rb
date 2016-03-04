@@ -31,7 +31,14 @@ class MoviesController < ApplicationController
       @movies = Movie.all
       session[:cur_ratings] = Hash[@all_ratings.zip([1,1,1,1])]
     end
-
+    if !params[:ratings]
+      flash.keep
+      if !session[:cur_ratings]
+        redirect_to movies_path
+      else
+        redirect_to movies_path(:ratings => session[:cur_ratings])
+      end
+    end
     case params[:sort]
     when 'title'
       session[:cur_sort] = params[:sort]
@@ -50,17 +57,10 @@ class MoviesController < ApplicationController
           @movies = @movies.order(session[:cur_sort])
           @date_hilite = 'hilite'
         else
-          @movies = Movie.all
+          @movies = @movies.all
         end
     end 
-    if !params[:ratings]
-      flash.keep
-      if !session[:cur_ratings]
-        redirect_to movies_path
-      else
-        redirect_to movies_path(:ratings => session[:cur_ratings])
-      end
-    end
+    
   end
 
 
