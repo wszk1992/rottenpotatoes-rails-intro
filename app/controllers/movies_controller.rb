@@ -21,17 +21,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-
     @all_ratings = Movie.ratingValues
     if params[:ratings]
       session[:cur_ratings] = params[:ratings]
-      @temp_ratings = session[:cur_ratings].keys
-      @movies = Movie.where(rating: @temp_ratings)
+      @movies = Movie.where(rating: session[:cur_ratings].keys)
     elsif session[:cur_ratings]
-      @temp_ratings = session[:cur_ratings].keys
-      @movies = Movie.where(rating: @temp_ratings)
+      @movies = Movie.where(rating: session[:cur_ratings].keys)
     else
       @movies = Movie.all
+      session[:cur_ratings] = Hash[@all_ratings.zip([1,1,1,1])]
     end
 
     case params[:sort]
@@ -52,15 +50,17 @@ class MoviesController < ApplicationController
           @movies = @movies.order(session[:cur_sort])
           @date_hilite = 'hilite'
         else
-          @movies = @movies.all
+          @movies = Movie.all
         end
     end 
-
-    if !params[:ratings] or !params[:sort]
+    if !params[:ratings]
       flash.keep
-      redirect_to movies_path(:ratings => session[:cur_ratings], :sort => session[:cur_sort])
+      if !session[:cur_ratings]
+        redirect_to movies_path
+      else
+        redirect_to movies_path(:ratings => session[:cur_ratings])
+      end
     end
-
   end
 
 
